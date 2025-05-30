@@ -53,6 +53,8 @@ function CreateTransactionDialog({ trigger, type }: Props) {
   const form = useForm<CreateTransactionSchemaType>({
     resolver: zodResolver(CreateTransactionSchema),
     defaultValues: {
+      description: '',
+      amount: 0,
       type,
       date: new Date(),
     },
@@ -110,7 +112,11 @@ function CreateTransactionDialog({ trigger, type }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        onInteractOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
         <DialogHeader>
           <DialogTitle>
             Create a new
@@ -135,7 +141,7 @@ function CreateTransactionDialog({ trigger, type }: Props) {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input defaultValue={''} {...field} />
+                    <Input type="text" {...field} />
                   </FormControl>
                   <FormDescription>
                     Transaction description (optional)
@@ -150,7 +156,7 @@ function CreateTransactionDialog({ trigger, type }: Props) {
                 <FormItem>
                   <FormLabel>Amount</FormLabel>
                   <FormControl>
-                    <Input defaultValue={0} type="number" {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormDescription>
                     Transaction amount (required)

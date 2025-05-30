@@ -112,7 +112,11 @@ function CreateCategoryDialog({ type, successCallback }: Props) {
           Create new
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent
+        onInteractOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
         <DialogHeader>
           <DialogTitle>
             Create
